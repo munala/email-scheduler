@@ -1,7 +1,3 @@
-[![Coverage Status](https://coveralls.io/repos/github/munala/lifego-api/badge.svg?branch=master)](https://coveralls.io/github/munala/lifego-api?branch=master)
-[![CircleCI](https://circleci.com/gh/munala/lifego-api.svg?style=svg)](https://circleci.com/gh/munala/lifego-api)
-[![Maintainability](https://api.codeclimate.com/v1/badges/e085e754cbc827558383/maintainability)](https://codeclimate.com/github/munala/lifego-api/maintainability)
-
 ## Description
 This is an API for scheduling emails. It is built using node `express`.
 
