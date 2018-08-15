@@ -11,8 +11,12 @@ module.exports = async (cache) => {
   const jobs = rows.map(row => row.dataValues);
 
   jobs.forEach((job) => {
-    const scheduledJob = scheduleMail(job);
+    if (!job.finished) {
+      const scheduledJob = scheduleMail(job);
 
-    cache.put(job.id, scheduledJob);
+      cache.put(job.id, scheduledJob);
+    } else {
+      job.destroy({ where: { id: job.id } });
+    }
   });
 };
