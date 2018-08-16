@@ -11,7 +11,7 @@ module.exports = (data) => {
     if (!Object.keys(data).includes(key)) {
       response = {
         valid: false,
-        error: `Missing ${key}.`,
+        error: `Missing '${key}' field`,
       };
 
       return false;
@@ -26,19 +26,19 @@ module.exports = (data) => {
   }
 
   Object.keys(data).every((key) => {
-    if (key === 'to' && !re.test(data.to)) {
+    if (!data[key]) {
       response = {
         valid: false,
-        error: 'Invalid email',
+        error: `Empty '${key}' field`,
       };
 
       return false;
     }
 
-    if (!data[key]) {
+    if (key === 'to' && !re.test(data.to)) {
       response = {
         valid: false,
-        error: `Empty ${key}.`,
+        error: 'Invalid email',
       };
 
       return false;

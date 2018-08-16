@@ -27,6 +27,6 @@ module.exports = async ({ data, id }) => {
 
   return {
     error,
-    coed: 400,
+    code: 400,
   };
 };

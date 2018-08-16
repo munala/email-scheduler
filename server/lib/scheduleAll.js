@@ -1,22 +1,21 @@
 const Job = require('../models').jobs;
 const scheduleMail = require('./scheduleMail');
+const { asyncForEach } = require('../utils');
 
 module.exports = async (cache) => {
   const rows = await Job.findAll({
-    where: {
-      finished: false,
-    },
+    where: { },
   });
 
   const jobs = rows.map(row => row.dataValues);
 
-  jobs.forEach((job) => {
-    if (!job.finished) {
-      const scheduledJob = scheduleMail(job);
+  await asyncForEach(jobs, async (job) => {
+    if (job.finished === false) {
+      const scheduledJob = await scheduleMail(job);
 
       cache.put(job.id, scheduledJob);
     } else {
-      job.destroy({ where: { id: job.id } });
+      await Job.destroy({ where: { id: job.id } });
     }
   });
 };

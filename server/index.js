@@ -18,4 +18,6 @@ module.exports = (app) => {
   app.post('/schedule', controllers.schedule);
   app.put('/update/:jobId', controllers.update);
   app.delete('/cancel/:jobId', controllers.cancel);
+
+  return app;
 };
