@@ -28,7 +28,7 @@ const sendMail = async ({
   return transporter.sendMail(mailOptions);
 };
 
-module.exports = (data) => {
+module.exports = async (data) => {
   const date = new Date(data.date);
 
   const job = schedule.scheduleJob(date, async () => {

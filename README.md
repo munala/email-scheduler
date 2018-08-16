@@ -30,6 +30,15 @@ Run the following commands to run app:
 
   `node app.js`
 
+## Testing
+Run the following commands to test app:
+
+  `npm test`
+
+  or
+
+  `npm run coverage` to run test and generate coverage.
+
 
 ## Api documentation
 [Click here][58286272]

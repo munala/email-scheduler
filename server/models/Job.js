@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: () => generateId(),
     },
     date: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     to: {
