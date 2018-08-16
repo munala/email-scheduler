@@ -1,3 +1,7 @@
+[![Coverage Status](https://coveralls.io/repos/github/munala/email-scheduler/badge.svg?branch=master)](https://coveralls.io/github/munala/email-scheduler?branch=master)
+[![CircleCI](https://circleci.com/gh/munala/email-scheduler.svg?style=svg)](https://circleci.com/gh/munala/email-scheduler)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a9b84e5bd39c7c6655e2/maintainability)](https://codeclimate.com/github/munala/email-scheduler/maintainability)
+
 ## Description
 This is an API for scheduling emails. It is built using node `express`.
 
