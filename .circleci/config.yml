@@ -44,7 +44,7 @@ jobs:
     # This is based on your 1.0 configuration file or project settings
     - run:
         working_directory: ~/munala/email-scheduler
-        command: nvm install 8.4.0 && nvm alias default 8.4.0
+        command: nvm install 8.11.3 && nvm alias default 8.11.3
     # Dependencies
     #   This would typically go in either a build or a build-and-test job when using workflows
     # Restore the dependency cache
