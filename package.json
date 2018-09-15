@@ -48,6 +48,7 @@
     "nodemailer": "^4.6.7",
     "pg": "^7.4.3",
     "sequelize": "^4.38.0",
+    "sequelize-cli": "^3.2.0",
     "uniqid": "^5.0.3"
   }
 }
