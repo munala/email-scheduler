@@ -28,6 +28,7 @@ Add the following environment variables:
   - `EMAIL_SENDER` - Email used by app to send emails.
   - `EMAIL_PASSWORD` - Password for the above email.
   - `AUTH_TOKEN` - Token that will be used to authenticate requests.
+  - `CLOUDAMQP_URL` - Url for CloudAMQP.
 
 ## Running
 Run the following commands to run app:

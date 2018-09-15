@@ -2,7 +2,7 @@
 const processMessage = require('./processMessage');
 const closeOnError = require('./closeOnError');
 
-module.exports = (amqpConn) => {
+module.exports = ({ amqpConn, publishData }) => {
   amqpConn.createChannel((err, channel) => {
     if (closeOnError({ amqpConn, error: err })) return;
 
@@ -19,7 +19,9 @@ module.exports = (amqpConn) => {
     channel.assertQueue('email_queue', { durable: true }, (error) => {
       if (closeOnError({ amqpConn, error })) return;
 
-      channel.consume('email_queue', message => processMessage({ message, channel, amqpConn }), { noAck: false });
+      channel.consume('email_queue', message => processMessage({
+        message, channel, amqpConn, publishData,
+      }), { noAck: false });
 
       console.log('Worker is started');
     });

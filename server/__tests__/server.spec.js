@@ -1,6 +1,7 @@
 const supertest = require('supertest');
 const express = require('express');
 const http = require('http');
+
 const initServer = require('../');
 
 const app = express();
@@ -9,6 +10,15 @@ const testApp = initServer(app, server);
 const agent = supertest.agent(testApp);
 
 const Job = require('../models').jobs;
+
+jest.mock('amqplib/callback_api', () => ({
+  connect: (url, callback) => {
+    callback(null, {
+      on: () => {},
+      createConfirmChannel: () => {},
+    });
+  },
+}));
 
 describe('Server tests', () => {
   beforeEach(() => {
@@ -21,6 +31,8 @@ describe('Server tests', () => {
       date: '"2018-08-15 20:18:00+03"',
       subject: 'subject',
       body: 'body',
+      bucketlistId: 'sfdsfsdffse',
+      jobId: null,
     };
 
     agent.post('/schedule')

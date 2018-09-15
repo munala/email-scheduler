@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "NODE_ENV=test sequelize db:migrate",
     "test": "NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles server",
-    "coverage": "NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles --collectCoverageFrom=server/**.js --coverage server",
+    "coverage": "NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles --collectCoverageFrom=server/**.js --collectCoverageFrom=!server/rabbitMQ/**.js --coverage server",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
@@ -35,6 +35,8 @@
     "supertest": "^3.1.0"
   },
   "dependencies": {
+    "amqp": "^0.2.7",
+    "amqp-mock": "^0.1.4-1",
     "amqplib": "^0.5.2",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",

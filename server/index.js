@@ -7,20 +7,23 @@ const { verifyToken } = require('./middleware');
 const { scheduleAll } = require('./lib');
 
 module.exports = (app) => {
+  app.use(cors());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
+
+  scheduleAll(cache);
+
+  app.set('cache', cache);
+
   rabbit((publishData) => {
-    app.use(cors());
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
-
-    scheduleAll(cache);
-
-    app.set('cache', cache);
     app.set('publishData', publishData);
-    app.use(verifyToken);
-
-    app.post('/schedule', controllers.schedule);
-    app.put('/update/:jobId', controllers.update);
-    app.delete('/cancel/:jobId', controllers.cancel);
   });
+
+  app.use(verifyToken);
+
+  app.post('/schedule', controllers.schedule);
+  app.put('/update/:jobId', controllers.update);
+  app.delete('/cancel/:jobId', controllers.cancel);
+
   return app;
 };

@@ -3,30 +3,34 @@ const amqp = require('amqplib/callback_api');
 const startPublisher = require('./startPublisher');
 const startWorker = require('./startWorker');
 
-const whenConnected = async (amqpConn) => {
-  const publishData = await startPublisher(amqpConn);
-
-  await startWorker(amqpConn);
-
-  return publishData;
+const whenConnected = async ({ amqpConn, callback }) => {
+  await startPublisher({
+    amqpConn,
+    callback: async (publishData) => {
+      startWorker({ amqpConn, publishData });
+      callback(publishData);
+    },
+  });
 };
 
 module.exports = async (callback) => {
-  amqp.connect(`${process.env.CLOUDAMQP_URL}?heartbeat=60`, async (err, amqpConn) => {
-    if (err) {
-      console.error('[AMQP]', err.message);
-    }
-
-    amqpConn.on('error', (error) => {
-      if (error.message !== 'Connection closing') {
-        console.error('[AMQP] conn error', error.message);
+  try {
+    amqp.connect(`${process.env.CLOUDAMQP_URL}?heartbeat=60`, async (err, amqpConn) => {
+      if (err) {
+        console.error('[AMQP]', err.message);
       }
+
+      amqpConn.on('error', (error) => {
+        if (error.message !== 'Connection closing') {
+          console.error('[AMQP] conn error', error.message);
+        }
+      });
+
+      console.log('[AMQP] connected');
+
+      whenConnected({ amqpConn, callback });
     });
-
-    console.log('[AMQP] connected');
-
-    const publishData = await whenConnected(amqpConn);
-
-    callback(publishData);
-  });
+  } catch (error) {
+    console.log({ error });
+  }
 };

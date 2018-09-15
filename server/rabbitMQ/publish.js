@@ -7,7 +7,7 @@ module.exports = ({
   offlinePubQueue,
 }) => {
   try {
-    publishChannel.publish(exchange || '', routingKey || 'email_queue', content, { persistent: true },
+    publishChannel.publish(exchange || '', routingKey || 'email_sender', content, { persistent: true },
       (error) => {
         if (error) {
           console.error('[AMQP] publish', error);
