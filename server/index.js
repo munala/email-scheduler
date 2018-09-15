@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cache = require('memory-cache');
+const rabbit = require('./rabbitMQ');
 const controllers = require('./controllers');
 const { verifyToken } = require('./middleware');
 const { scheduleAll } = require('./lib');
@@ -13,6 +14,11 @@ module.exports = (app) => {
   scheduleAll(cache);
 
   app.set('cache', cache);
+
+  rabbit((publishData) => {
+    app.set('publishData', publishData);
+  });
+
   app.use(verifyToken);
 
   app.post('/schedule', controllers.schedule);

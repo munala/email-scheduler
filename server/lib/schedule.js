@@ -2,7 +2,7 @@ const Job = require('../models').jobs;
 const { validateFields } = require('../utils');
 const scheduleMail = require('./scheduleMail');
 
-module.exports = async (data) => {
+module.exports = async ({ bucketlistId, jobId, ...data }) => {
   const { valid, error } = validateFields(data);
 
   if (valid) {

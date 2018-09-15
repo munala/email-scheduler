@@ -1,0 +1,20 @@
+const work = require('./work');
+const closeOnError = require('./closeOnError');
+
+module.exports = ({
+  message, channel, amqpConn, publishData,
+}) => {
+  work({
+    message,
+    publishData,
+    callback: (ok) => {
+      try {
+        if (ok) channel.ack(message);
+
+        else channel.reject(message, true);
+      } catch (error) {
+        closeOnError({ error, amqpConn });
+      }
+    },
+  });
+};
